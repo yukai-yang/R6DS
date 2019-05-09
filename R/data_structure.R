@@ -366,8 +366,9 @@ RDict$set("public", "initialize", function(..., collapse=NULL){
 })
 
 RDict$set("public", "Has", function(key){
-  tmp = try(is.character(key), silent=T)
-  if(class(tmp) == "try-error") key = deparse(substitute(key))
+  key = gsub('"',"", deparse(substitute(x)))
+  #tmp = try(is.character(key), silent=T)
+  #if(class(tmp) == "try-error") key = deparse(substitute(key))
 
   current <- .head
   while(!is.null(current)){
@@ -378,8 +379,9 @@ RDict$set("public", "Has", function(key){
 })
 
 RDict$set("public", "Get", function(key){
-  tmp = try(is.character(key), silent=T)
-  if(class(tmp) == "try-error") key = deparse(substitute(key))
+  key = gsub('"',"", deparse(substitute(x)))
+  #tmp = try(is.character(key), silent=T)
+  #if(class(tmp) == "try-error") key = deparse(substitute(key))
 
   current <- .head
   while(!is.null(current)){
@@ -390,8 +392,9 @@ RDict$set("public", "Get", function(key){
 })
 
 RDict$set("public", "Delete", function(key){
-  tmp = try(is.character(key), silent=T)
-  if(class(tmp) == "try-error") key = deparse(substitute(key))
+  key = gsub('"',"", deparse(substitute(x)))
+  #tmp = try(is.character(key), silent=T)
+  #if(class(tmp) == "try-error") key = deparse(substitute(key))
 
   current <- .head
   while(!is.null(current)){
@@ -500,90 +503,90 @@ RBST$set("public", "initialize", function(lessthan, equal, ..., collapse=NULL){
 
 RBST$set("public", "traverseBST", function(mode="in-order",callback=function(val){cat(" ->",val," ")}){
   if(mode == "in-order"){
-    traverse_in_order(root=.root, callback=callback)
+    traverse_in_order(node=.root, callback=callback)
   }
 
   if(mode == "pre-order"){
-    traverse_pre_order(root=.root, callback=callback)
+    traverse_pre_order(node=.root, callback=callback)
   }
 
   if(mode == "post-order"){
-    traverse_post_order(root=.root, callback=callback)
+    traverse_post_order(node=.root, callback=callback)
   }
 
   return(NULL)
 })
 
 # callback is a function about to treat the val in each node
-RBST$set("private", "traverse_in_order", function(root, callback){
-  if(is.null(root)) return()
+RBST$set("private", "traverse_in_order", function(node, callback){
+  if(is.null(node)) return()
 
-  traverse_in_order(root=root$Prev, callback=callback)
-  callback(root$Val)
-  traverse_in_order(root=root$Next, callback=callback)
+  traverse_in_order(node=node$Prev, callback=callback)
+  callback(node$Val)
+  traverse_in_order(node=node$Next, callback=callback)
 
 })
 
 # callback is a function about to treat the val in each node
-RBST$set("private", "traverse_pre_order", function(root, callback){
-  if(is.null(root)) return(NULL)
+RBST$set("private", "traverse_pre_order", function(node, callback){
+  if(is.null(node)) return(NULL)
 
-  callback(root$Val)
-  traverse_pre_order(root=root$Prev, callback=callback)
-  traverse_pre_order(root=root$Next, callback=callback)
+  callback(node$Val)
+  traverse_pre_order(node=node$Prev, callback=callback)
+  traverse_pre_order(node=node$Next, callback=callback)
 
   return(NULL)
 })
 
 # callback is a function about to treat the val in each node
-RBST$set("private", "traverse_post_order", function(root, callback){
-  if(is.null(root)) return(NULL)
+RBST$set("private", "traverse_post_order", function(node, callback){
+  if(is.null(node)) return(NULL)
 
-  traverse_post_order(root=root$Prev, callback=callback)
-  traverse_post_order(root=root$Next, callback=callback)
-  callback(root$Val)
+  traverse_post_order(node=node$Prev, callback=callback)
+  traverse_post_order(node=node$Next, callback=callback)
+  callback(node$Val)
 
   return(NULL)
 })
 
 # the function find key == val of some node in the subtree from root
-# root and parent are references to two nodes in the tree
-# root is where the search starts
-# parent is just root's parent if any
-RBST$set("private", "search", function(key, root=NULL, parent=NULL){
-  if(is.null(root)) return(list(found=FALSE, ref=parent))
+# node and (its) parent are references to two nodes in the tree
+# node is where the search starts
+# parent is just the node's parent if any
+RBST$set("private", ".search", function(key, node=NULL, parent=NULL){
+  if(is.null(node)) return(list(found=FALSE, ref=parent))
 
-  if(equal(key, root$Val)) return(list(found=TRUE, ref=root, par=parent))
+  if(equal(key, node$Val)) return(list(found=TRUE, ref=node, par=parent))
 
-  if(lessthan(key, root$Val)){# go left or prev
-    return(search(key=key, root=root$Prev, parent=root))
+  if(lessthan(key, node$Val)){# go left or prev
+    return(.search(key=key, node=node$Prev, parent=node))
   }else{# go right or next
-    return(search(key=key, root=root$Next, parent=root))
+    return(.search(key=key, node=node$Next, parent=node))
   }
 })
 
 
 RBST$set("public", "searchBST", function(val){
-  ret = search(key=val, root=.root)
+  ret = .search(key=val, node=.root)
   if(ret$found){ return(ret$ref$Val)
   }else return(NULL)
 })
 
-# insert the node with val into the subtree from root
-# note that root should not be NULL
-RBST$set("private", "insert", function(val, root){
-  if(equal(val, root$Val)) return(FALSE)
+# insert the node with val into the subtree stem from node
+# note that the node should not be NULL
+RBST$set("private", "insert", function(val, node){
+  if(equal(val, node$Val)) return(FALSE)
 
-  if(lessthan(val, root$Val)){# go left or prev
-    if(is.null(root$Prev)){
-      root$setPrev(RNode$new(val)); .len <<- .len+1; return(TRUE)
+  if(lessthan(val, node$Val)){# go left or prev
+    if(is.null(node$Prev)){
+      node$setPrev(RNode$new(val)); .len <<- .len+1; return(TRUE)
     }
-    return(insert(val, root$Prev))
+    return(insert(val, node$Prev))
   }else{# go right or next
-    if(is.null(root$Next)){
-      root$setNext(RNode$new(val)); .len <<- .len+1; return(TRUE)
+    if(is.null(node$Next)){
+      node$setNext(RNode$new(val)); .len <<- .len+1; return(TRUE)
     }
-    return(insert(val, root$Next))
+    return(insert(val, node$Next))
   }
 })
 
@@ -594,9 +597,9 @@ RBST$set("public", "insertBST", function(val){
   return(insert(val, .root))
 })
 
-RBST$set("private", ".min", function(root){
-  if(is.null(root$Prev)) return(root$Val)
-  return(.min(root$Prev))
+RBST$set("private", ".min", function(node){
+  if(is.null(node$Prev)) return(node$Val)
+  return(.min(node$Prev))
 })
 
 RBST$set("active", "min", function(){
@@ -604,9 +607,9 @@ RBST$set("active", "min", function(){
   return(.min(.root))
 })
 
-RBST$set("private", ".max", function(root){
-  if(is.null(root$Next)) return(root$Val)
-  return(.max(root$Next))
+RBST$set("private", ".max", function(node){
+  if(is.null(node$Next)) return(node$Val)
+  return(.max(node$Next))
 })
 
 RBST$set("active", "max", function(){
@@ -616,7 +619,7 @@ RBST$set("active", "max", function(){
 
 # delete the node == val
 RBST$set("public", "deleteBST", function(val){
-  ret = search(key=val, root=.root)
+  ret = .search(key=val, node=.root)
 
   if(ret$found){
     current <- ret$ref
