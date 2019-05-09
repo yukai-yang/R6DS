@@ -366,7 +366,7 @@ RDict$set("public", "initialize", function(..., collapse=NULL){
 })
 
 RDict$set("public", "Has", function(key){
-  key = gsub('"',"", deparse(substitute(x)))
+  key = gsub('"',"", deparse(substitute(key)))
   #tmp = try(is.character(key), silent=T)
   #if(class(tmp) == "try-error") key = deparse(substitute(key))
 
@@ -379,7 +379,7 @@ RDict$set("public", "Has", function(key){
 })
 
 RDict$set("public", "Get", function(key){
-  key = gsub('"',"", deparse(substitute(x)))
+  key = gsub('"',"", deparse(substitute(key)))
   #tmp = try(is.character(key), silent=T)
   #if(class(tmp) == "try-error") key = deparse(substitute(key))
 
@@ -392,7 +392,7 @@ RDict$set("public", "Get", function(key){
 })
 
 RDict$set("public", "Delete", function(key){
-  key = gsub('"',"", deparse(substitute(x)))
+  key = gsub('"',"", deparse(substitute(key)))
   #tmp = try(is.character(key), silent=T)
   #if(class(tmp) == "try-error") key = deparse(substitute(key))
 
