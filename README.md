@@ -4,7 +4,22 @@ R6DS version 1.1.0 (Red DS)
 ===========================
 
 R6DS stands for R6 class based Data Structures. The package provides
-reference classes implementing some useful data stuctures.
+reference classes implementing some useful [data
+stuctures](https://en.wikipedia.org/wiki/Data_structure). They are:
+
+-   RStack
+    ([stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)))
+-   RQueue
+    ([queue](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)))
+-   RDeque ([double-ended
+    queue](https://en.wikipedia.org/wiki/Double-ended_queue))
+-   RDLL ([doubly linked
+    list](https://en.wikipedia.org/wiki/Doubly_linked_list))
+-   RSet ([set](https://en.wikipedia.org/wiki/Set_(abstract_data_type)))
+-   RDict
+    ([dictionary](https://en.wikipedia.org/wiki/Associative_array))
+-   RBST ([binary search
+    tree](https://en.wikipedia.org/wiki/Binary_search_tree))
 
 How to install
 --------------
