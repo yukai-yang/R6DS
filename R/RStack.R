@@ -96,6 +96,17 @@ RStack$set("public", "initialize", function(..., collapse=NULL){
   }
 })
 
+RStack$set("active", "toList", function(){
+  ret = list(); length(ret) = .len
+  current <- .tail; iter = .len
+  while(!is.null(current)){
+    ret[[iter]] <- current$Val
+    current <- current$Prev
+    iter <- iter-1
+  }
+  return(ret)
+})
+
 RStack$set("public", "push", function(..., collapse=NULL){
   items <- c(list(...), as.list(collapse))
   .len <<- .len+length(items)

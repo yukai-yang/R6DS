@@ -107,15 +107,24 @@ For the details about the data structures, see \href{https://en.wikipedia.org/wi
 
 
 \describe{
+
 \item{\code{new(..., collapse=NULL)}}{
 a method belonging to the class which create an instance of the class.
 The method creates a new instance of some class in the package
 containing the values in \code{...} and \code{collapse} as its elements.
 }
+
+\item{\code{toList}}{
+an active immutable method of an instance which returns a list containing its elements (a copy).
+
+Note that \code{\link{RBST}} has multiple versions of the \code{toList} methods.
+}
+
 \item{\code{clone(deep=FALSE)}}{
 an immutable method of an instance which returns of copy of the instance.
 The \code{deep=TRUE} argument indicates that \code{clone} also gives a copy of its members.
 }
+
 \item{\code{size}}{
 an active immutable method of an instance to return its size (like the \code{length} of an R vector).
 }

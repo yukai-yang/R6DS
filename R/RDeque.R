@@ -166,6 +166,17 @@ RDeque$set("public", "initialize", function(..., collapse=NULL){
   }
 })
 
+RDeque$set("active", "toList", function(){
+  ret = list(); length(ret) = .len
+  current <- .head; iter = 1
+  while(!is.null(current)){
+    ret[[iter]] <- current$Val
+    current <- current$Next
+    iter <- iter+1
+  }
+  return(ret)
+})
+
 RDeque$set("public", "append", function(..., collapse=NULL){
   items <- c(list(...), as.list(collapse))
   if(.len > 0){

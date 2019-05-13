@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-R6DS version 1.1.0 (Red DS)
+R6DS version 1.1.1 (Red DS)
 ===========================
 
 R6DS stands for R6 class based Data Structures. The package provides

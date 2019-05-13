@@ -70,11 +70,6 @@
 #' \code{instance$show(func, queue)}
 #' }
 #'
-#' \item{\code{toList}}{
-#' This is an active method which returns the node values as a list (a copy).
-#' Note that you do not need to write the parenthesis.
-#' }
-#'
 #' \item{\code{elem_at(index)}}{
 #' It returns the value (a copy) of the node at position \code{index} (a positive integer).
 #' \code{index} must be a scalar, and if it is a vector of more than one element,

@@ -98,6 +98,15 @@ with the attribute \code{num}.
 The immutable methods do not change the nodes of the instance.
 
 \describe{
+
+\item{\code{toList}, \code{toList_pre}, and \code{toList_post}}{
+The active method \code{toList} returns a list containing its elements (a copy).
+
+The order of the list can be "traverse-in-order" by using \code{toList},
+"traverse-pre-order" by using \code{toList_pre},
+or "traverse-post-order" by using \code{toList_post}
+}
+
 \item{\code{traverse(mode="in", callback=function(item){print(item)}, ...)}}{
 The \code{traverse} method takes at least two arguments which are \code{mode} and \code{callback}.
 
@@ -208,6 +217,12 @@ bst$search_for(list(key=5, val="0"))
 # so the parenthesis is not needed
 bst$min
 bst$max
+
+### toList
+
+bst$toList
+bst$toList_pre
+bst$toList_post
 
 ### traversing
 
