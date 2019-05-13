@@ -4,4 +4,4 @@ New Featurs in R6DS 1.1.0
 =========================
 
 -   All the functions
--   Documetation including README, LICENSE and etc.
+-   Documentation including README, LICENSE and etc.
