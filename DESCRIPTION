@@ -1,11 +1,11 @@
 Package: R6DS
 Type: Package
 Title: R6 Reference Class based Data Structures
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: person(given="Yukai",family="Yang",email="yukai.yang@statistik.uu.se",role=c("aut", "cre"),comment=c(ORCID="0000-0002-2623-8549"))
-Description: Provides some useful data structures by using the R6 reference class.
-    The classes of the data structures are also reference classes which means that their instances will share the same memory
-    and the pass-by-copy shall be done explicitly.
+Description: provides reference classes implementing some useful data stuctures.
+    The package implements these data structures by using the reference class R6.
+    Therefore, the classes of the data structures are also reference classes which means that their instances are passed by reference.
 Depends: R (>= 3.0.0)
 License: GPL-3
 Encoding: UTF-8
