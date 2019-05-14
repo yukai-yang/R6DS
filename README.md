@@ -87,7 +87,7 @@ all the functions (closures).
 
 Almost all the variables (if the functions are also variables, yes, they
 are, because the function name can be changed to another function) are
-assigned or passed by copy (this is termed pass-by-copy).
+assigned or passed by value (this is termed pass-by-value).
 
 For example, consider the simple assignment:
 
@@ -120,7 +120,7 @@ z
 ```
 
 R will copy the variable `x` to a new variable `val`, change the value
-of `val`, and then return it by copy! (copy the local `val` to the new
+of `val`, and then return it by value! (copy the local `val` to the new
 variable `z`, and then kill `val` when the function exits) So the
 function actually copies twice in both passing and returning.
 
@@ -185,16 +185,18 @@ instance of this class will always be passed-by-reference.
 
 R is becoming a more and more sophisticated language. R users program by
 using R to make achievements in data sciences. Now the question is that
-“Are you really happy with only pass-by-copy?” or “whether only the
-pass-by-copy is sufficient?”
+“Are you really happy with only pass-by-value?” or “whether only the
+pass-by-value is sufficient?”
 
 The answer is NO, because we are doing much more than expected in data
 sciences, and some ideas from the data structures are now needed, but
 the implementation of these ideas needs the pass-by-reference!
 
-*So the dream is that we hope that we can input something into some
-function and the function will change its value! Or, for some people,
-“we really miss the pointers or references in C++ and JAVA…”*
+So the dream is that **“we hope that we can input something into some
+function and the function will change its value!”**
+
+Or, for some people, **“we really miss the pointers or references in
+Fortran, C, C++, and etc.”**
 
 Even R says no itself due to the fact the Reference Class following the
 S4 class has been implemented. And then the much more efficient R6 class
@@ -257,14 +259,14 @@ tmp1 = RClass$new()
 rm(tmp1); gc()
 #> [1] "obj 0 deleted!"
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  837277 44.8    1654205 88.4         NA  1154888 61.7
-#> Vcells 1464389 11.2    8388608 64.0      16384  2295778 17.6
+#> Ncells  837276 44.8    1654202 88.4         NA  1154888 61.7
+#> Vcells 1464385 11.2    8388608 64.0      16384  2295774 17.6
 ```
 
 Yes.
 
 Our experiment is designed as follows. If the instance of the `RClass`
-class is passed-by-copy into the function `ftmp`, then i) the global
+class is passed-by-value into the function `ftmp`, then i) the global
 `tmp1` will not be changed; ii) the new variable `tmp` inside the
 function will be removed when the function exits, which means that we
 will see some message saying “obj 1 deleted!”, because the value of
@@ -274,8 +276,8 @@ will see some message saying “obj 1 deleted!”, because the value of
 tmp1 = RClass$new()
 ftmp(tmp1); gc()
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  839409 44.9    1654205 88.4         NA  1247678 66.7
-#> Vcells 1470848 11.3    8388608 64.0      16384  2295778 17.6
+#> Ncells  839408 44.9    1654202 88.4         NA  1247677 66.7
+#> Vcells 1470844 11.3    8388608 64.0      16384  2295774 17.6
 tmp1$Val
 #> [1] 1
 ```
