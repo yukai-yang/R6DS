@@ -259,8 +259,8 @@ tmp1 = RClass$new()
 rm(tmp1); gc()
 #> [1] "obj 0 deleted!"
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  837273 44.8    1654164 88.4         NA  1154948 61.7
-#> Vcells 1464381 11.2    8388608 64.0      16384  2297142 17.6
+#> Ncells  837275 44.8    1654125 88.4         NA  1155037 61.7
+#> Vcells 1464437 11.2    8388608 64.0      16384  2298441 17.6
 ```
 
 Yes.
@@ -276,8 +276,8 @@ will see some message saying “obj 1 deleted!”, because the value of
 tmp1 = RClass$new()
 ftmp(tmp1); gc()
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  839408 44.9    1654164 88.4         NA  1247674 66.7
-#> Vcells 1470845 11.3    8388608 64.0      16384  2297142 17.6
+#> Ncells  839410 44.9    1654125 88.4         NA  1247676 66.7
+#> Vcells 1470901 11.3    8388608 64.0      16384  2298441 17.6
 tmp1$Val
 #> [1] 1
 ```
@@ -380,6 +380,8 @@ make the manipulation of the data much more flexible. And you should see
 how important the package can be…
 
 But of course, the example is somewhat “stupid” as you can solve the
-same problem by using some global variable. However, in many other
-cases, too many global variables make the program … eh… you know the
-feeling…
+same problem by using some global variable. However, global variable
+should not be preferred in many other cases, for example: when you want
+to share your code with others, and preferrably the function offers the
+only interface (they do not need to know the names of the global
+variables and create them manually)
