@@ -24,7 +24,7 @@ In order to create an instance of the R6 type reference class, you will have to 
 where \code{RStack} is an R6 type reference class.
 
 The reference class has the feature that each time when you pass (or assign) an instance of the reference class to somewhere,
-it is not pass-by-copy but pass-by-reference. For example, suppose there is an instance of the reference class \code{x} who has an attribute \code{x$y}.
+it is not pass-by-value but pass-by-reference. For example, suppose there is an instance of the reference class \code{x} who has an attribute \code{x$y}.
 If you pass it to a function \code{func} by using \code{func(x)}, the function will not copy x but pass it as a reference.
 Inside the function \code{func}, if there is a sentence like
 
