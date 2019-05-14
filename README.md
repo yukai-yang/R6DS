@@ -252,8 +252,8 @@ tmp1 = RClass$new()
 rm(tmp1); gc()
 #> [1] "obj 0 deleted!"
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  837267 44.8    1654138 88.4         NA  1154965 61.7
-#> Vcells 1464098 11.2    8388608 64.0      16384  2296761 17.6
+#> Ncells  837267 44.8    1654121 88.4         NA  1155000 61.7
+#> Vcells 1464101 11.2    8388608 64.0      16384  2296924 17.6
 ```
 
 Yes.
@@ -269,8 +269,8 @@ will see some message saying “obj 1 deleted!”, because the value of
 tmp1 = RClass$new()
 ftmp(tmp1); gc()
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  839399 44.9    1654138 88.4         NA  1247668 66.7
-#> Vcells 1470557 11.3    8388608 64.0      16384  2296761 17.6
+#> Ncells  839399 44.9    1654121 88.4         NA  1247668 66.7
+#> Vcells 1470560 11.3    8388608 64.0      16384  2296924 17.6
 tmp1$Val
 #> [1] 1
 ```
@@ -294,6 +294,7 @@ just compare the numbers for simplicity.
 We consider the tree as follows
 
 ![](https://upload.wikimedia.org/wikipedia/commons/d/da/Binary_search_tree.svg)
+
 Graph source: [Binary Search Tree @
 WIKIPEDIA](https://en.wikipedia.org/wiki/Binary_search_tree).
 
