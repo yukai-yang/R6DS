@@ -192,6 +192,10 @@ The answer is NO, because we are doing much more than expected in data
 sciences, and some ideas from the data structures are now needed, but
 the implementation of these ideas needs the pass-by-reference!
 
+*So the dream is that we hope that we can input something into some
+function and the function will change its value! Or, for some people,
+“we really miss the pointers or references in C++ and JAVA…”*
+
 Even R says no itself due to the fact the Reference Class following the
 S4 class has been implemented. And then the much more efficient R6 class
 was implemented and available in the R6 package. I employ the R6 class
@@ -253,8 +257,8 @@ tmp1 = RClass$new()
 rm(tmp1); gc()
 #> [1] "obj 0 deleted!"
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  837273 44.8    1654127 88.4         NA  1155022 61.7
-#> Vcells 1464355 11.2    8388608 64.0      16384  2298809 17.6
+#> Ncells  837277 44.8    1654205 88.4         NA  1154888 61.7
+#> Vcells 1464389 11.2    8388608 64.0      16384  2295778 17.6
 ```
 
 Yes.
@@ -270,8 +274,8 @@ will see some message saying “obj 1 deleted!”, because the value of
 tmp1 = RClass$new()
 ftmp(tmp1); gc()
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  839408 44.9    1654127 88.4         NA  1247674 66.7
-#> Vcells 1470819 11.3    8388608 64.0      16384  2298809 17.6
+#> Ncells  839409 44.9    1654205 88.4         NA  1247678 66.7
+#> Vcells 1470848 11.3    8388608 64.0      16384  2295778 17.6
 tmp1$Val
 #> [1] 1
 ```
