@@ -260,7 +260,7 @@ rm(tmp1); gc()
 #> [1] "obj 0 deleted!"
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
 #> Ncells  837275 44.8    1654125 88.4         NA  1155037 61.7
-#> Vcells 1464437 11.2    8388608 64.0      16384  2298441 17.6
+#> Vcells 1464438 11.2    8388608 64.0      16384  2298444 17.6
 ```
 
 Yes.
@@ -277,7 +277,7 @@ tmp1 = RClass$new()
 ftmp(tmp1); gc()
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
 #> Ncells  839410 44.9    1654125 88.4         NA  1247676 66.7
-#> Vcells 1470901 11.3    8388608 64.0      16384  2298441 17.6
+#> Vcells 1470902 11.3    8388608 64.0      16384  2298444 17.6
 tmp1$Val
 #> [1] 1
 ```
@@ -339,9 +339,8 @@ container$size
 # then we define the callback function which takes two arguments
 # node: the node or element in the tree
 # queue: additional argument hopefully pass-by-reference
-callback <- function(node, queue){
-  queue$enqueue(node)
-}
+callback <- function(item, queue) queue$enqueue(item)
+# note that item is the value of the node but not the node!
 
 # traverse-in-order
 bst$traverse(mode="in", callback=callback, container)

@@ -114,10 +114,14 @@ The \code{mode} takes a value in one of the three strings
 \code{"in"}, \code{"pre"}, and \code{"post"} which indicate
 \emph{traverse-in-order}, \emph{traverse-pre-order}, and \emph{traverse-post-order}, respectively.
 
-The \code{callback} takes a function input
+The \code{callback} takes a function
 specifying how to handle the value of each node in the tree.
 By default, \code{callback} prints the nodes by using the \code{print} function.
 
+Note that the first argument of the \code{callback} function must be the value of the node
+but not the node itself!
+
+\code{callback} can have two or more arguments.
 The method also takes \code{...} as the additional arguments for the \code{callback} function if any.
 }
 
