@@ -104,7 +104,7 @@
 #' or "traverse-post-order" by using \code{toList_post}
 #' }
 #'
-#' \item{\code{traverse(mode="in", callback=function(item){print(item)}, ...)}}{
+#' \item{\code{traverse(mode, callback=function(item){print(item)}, ...)}}{
 #' The \code{traverse} method takes at least two arguments which are \code{mode} and \code{callback}.
 #'
 #' The \code{mode} takes a value in one of the three strings
@@ -145,12 +145,10 @@
 #'
 #' \describe{
 #'
-#' \item{\code{insert(val)}}{
-#' The method \code{insert} inserts a new node and returns \code{TRUE}
-#' showing that the inserting is successful,
-#' but if there is one node in BST that is \code{equal} to the node,
-#' the \code{insert} will do nothing and return a \code{FALSE}
-#' showing that the inserting fails.
+#' \item{\code{insert(..., collapse=NULL)}}{
+#' The method \code{insert} inserts new nodes into the tree.
+#' If some nodes are \code{equal} to the nodes in the tree,
+#' they will not be inserted.
 #' }
 #'
 #' \item{\code{delete(val)}}{
@@ -190,9 +188,7 @@
 #' ### maintaining
 #'
 #' bst$insert(list(key=5, val="6"))
-#' # FALSE though their val are different
 #' bst$insert(list(key=6, val="5"))
-#' # TRUE
 #'
 #' bst$delete(list(key=7, val="7"))
 #' # FALSE
@@ -229,7 +225,7 @@
 #' # remember that RQueue is a reference class
 #' # so the new callback will store the traversed nodes
 #'
-#' bst$traverse(callback=callback)
+#' bst$traverse(mode = "in", callback=callback)
 #' tmp = queue$dequeue(); print(tmp)
 #' while(!is.null(tmp)) {tmp = queue$dequeue(); print(tmp)}
 #' bst$traverse(mode = "in", callback=callback)
@@ -263,7 +259,7 @@ RBST$set("active", "size", function(){ return(.len) })
 # the equal function defines == between values
 RBST$set("public", "initialize", function(lessthan, equal, ..., collapse=NULL){
   lessthan <<- lessthan; equal <<- equal
-  items = list(...); items = c(items, as.list(collapse))
+  items = c(items = list(...), as.list(collapse))
 
   for(item in items) insert(item)
 })
@@ -289,7 +285,7 @@ RBST$set("active", "toList_post", function(){
   return(ret$toList)
 })
 
-RBST$set("public", "traverse", function(mode="in", callback=function(item){print(item)}, ...){
+RBST$set("public", "traverse", function(mode, callback=function(item){print(item)}, ...){
   if(mode == "in"){
     traverse_in_order(node=.root, callback=callback, args=list(...))
   }else if(mode == "pre"){
@@ -374,11 +370,19 @@ RBST$set("private", ".insert", function(val, node){
   }
 })
 
-RBST$set("public", "insert", function(val){
-  if(is.null(.root)){
-    .root <<- RNode$new(val); .len <<- 1; return(TRUE)
+RBST$set("public", "insert", function(..., collapse=NULL){
+  items = c(list(...), as.list(collapse))
+  if(length(items) == 0) return(invisible(NULL))
+
+  for(item in items){
+    if(is.null(.root)){
+      .root <<- RNode$new(item); .len <<- 1
+    }else{
+      .insert(item, .root)
+    }
   }
-  return(.insert(val, .root))
+
+  return(invisible(NULL))
 })
 
 RBST$set("private", ".min", function(node){

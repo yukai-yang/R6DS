@@ -107,7 +107,7 @@ The order of the list can be "traverse-in-order" by using \code{toList},
 or "traverse-post-order" by using \code{toList_post}
 }
 
-\item{\code{traverse(mode="in", callback=function(item){print(item)}, ...)}}{
+\item{\code{traverse(mode, callback=function(item){print(item)}, ...)}}{
 The \code{traverse} method takes at least two arguments which are \code{mode} and \code{callback}.
 
 The \code{mode} takes a value in one of the three strings
@@ -150,12 +150,10 @@ The mutable methods changes the nodes of the instance.
 
 \describe{
 
-\item{\code{insert(val)}}{
-The method \code{insert} inserts a new node and returns \code{TRUE}
-showing that the inserting is successful,
-but if there is one node in BST that is \code{equal} to the node,
-the \code{insert} will do nothing and return a \code{FALSE}
-showing that the inserting fails.
+\item{\code{insert(..., collapse=NULL)}}{
+The method \code{insert} inserts new nodes into the tree.
+If some nodes are \code{equal} to the nodes in the tree,
+they will not be inserted.
 }
 
 \item{\code{delete(val)}}{
@@ -194,9 +192,7 @@ bst <- RBST$new(lessthan=lessthan, equal=equal,
 ### maintaining
 
 bst$insert(list(key=5, val="6"))
-# FALSE though their val are different
 bst$insert(list(key=6, val="5"))
-# TRUE
 
 bst$delete(list(key=7, val="7"))
 # FALSE
@@ -233,7 +229,7 @@ callback <- function(item)queue$enqueue(item)
 # remember that RQueue is a reference class
 # so the new callback will store the traversed nodes
 
-bst$traverse(callback=callback)
+bst$traverse(mode = "in", callback=callback)
 tmp = queue$dequeue(); print(tmp)
 while(!is.null(tmp)) {tmp = queue$dequeue(); print(tmp)}
 bst$traverse(mode = "in", callback=callback)
