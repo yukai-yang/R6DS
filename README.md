@@ -70,7 +70,7 @@ Enjoy!
 Why do we need the reference class?
 -----------------------------------
 
-I do not want to spend time on explaning why the data structures
+I do not want to spend time on explaining why the data structures
 implemented in the package are important. The importance of the data
 structures in algorithm implementation and design patterns has been
 mentioned many many times in textbooks. In this section, I would like to
@@ -87,8 +87,9 @@ all the functions (closures).
 
 Almost all the variables (if the functions are also variables, yes, they
 are, because the function name can be changed to another function) are
-assigned or passed by copy (this is termed pass-by-copy). For example,
-consider the simple assignment:
+assigned or passed by copy (this is termed pass-by-copy).
+
+For example, consider the simple assignment:
 
 ``` r
 x <- 0
@@ -97,11 +98,11 @@ y <- x
 
 R will copy the value of `x` to `y`, and they are supposed to be two
 different variables which occupy different memory pieces. However, in
-practice, the new memory will not allocated for `y` immediately when
+practice, the new memory will not be allocated for `y` immediately when
 running `y <- x`. R will do a fake pass-by-reference (that we will
-explain later), and later new memory will be allocated for `y`/`x` once
-the value of `x`/`y` is changed. So anyway, `x` to `y` are supposed to
-be in different places in the memory.
+explain later), and later new memory will be allocated for `y`(or `x`),
+once the value of `x`(or `y`) is changed. So anyway, `x` to `y` are
+supposed to be in different places in the memory.
 
 Now consider the pass:
 
@@ -119,13 +120,13 @@ z
 ```
 
 R will copy the variable `x` to a new variable `val`, change the value
-of `val`, and then return it by copy (copy the local `val` to the new
-variable `z`, and then kill `val` when the function exits)! So it means
-that the function copy twice in both passing and returning.
+of `val`, and then return it by copy! (copy the local `val` to the new
+variable `z`, and then kill `val` when the function exits) So the
+function actually copies twice in both passing and returning.
 
 It should be noticed that, if the value of `val` is not going to be
 changed inside the function `func`, that is, `func` is defined to be a
-imuutable function like, for example,
+immutable function like, for example,
 
 ``` r
 # define a function which changes the value of the passed variable,
@@ -150,7 +151,7 @@ the global `x` will be changed…
 I will explain why it is a good dream later. But now let’s focus on the
 pass-by-reference.
 
-The pass-by-reference in assignment imples that, in the assignment
+The pass-by-reference in assignment implies that, in the assignment
 action, for example,
 
 ``` r
@@ -252,8 +253,8 @@ tmp1 = RClass$new()
 rm(tmp1); gc()
 #> [1] "obj 0 deleted!"
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  837267 44.8    1654121 88.4         NA  1155000 61.7
-#> Vcells 1464101 11.2    8388608 64.0      16384  2296924 17.6
+#> Ncells  837264 44.8    1654098 88.4         NA  1155028 61.7
+#> Vcells 1464101 11.2    8388608 64.0      16384  2297823 17.6
 ```
 
 Yes.
@@ -269,8 +270,8 @@ will see some message saying “obj 1 deleted!”, because the value of
 tmp1 = RClass$new()
 ftmp(tmp1); gc()
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  839399 44.9    1654121 88.4         NA  1247668 66.7
-#> Vcells 1470560 11.3    8388608 64.0      16384  2296924 17.6
+#> Ncells  839399 44.9    1654098 88.4         NA  1247665 66.7
+#> Vcells 1470565 11.3    8388608 64.0      16384  2297823 17.6
 tmp1$Val
 #> [1] 1
 ```
