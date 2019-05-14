@@ -241,29 +241,48 @@ RClass$set("public", "finalize", function(){ print(paste("obj",.val,"deleted!"))
 ```
 
 We define a new R6 type reference class `RClass`. It is has a `finalize`
-function which will be run when the system remove an instance of the
-class and clear the memory allocated for it. We see that the `finalize`
-will pop a message show that the instance is being deleted. We do the
-memory garbage collection manually by using the `gc` function.
-
-We first define a function which will take a variable and print it.
-
-``` r
-ftmp <- function(tmp){ tmp$Set(1) }
-```
+function which will be run when the system removes the instance of the
+class (free or collect the memory allocated for it). We see that the
+`finalize` will print a message show that the instance is being deleted.
+We do the memory garbage collection manually by using the `gc` function,
+because R is “lazy”…
 
 We test if the memory will be collected when we run `gc`.
 
 ``` r
 tmp1 = RClass$new()
-rm(tmp1); gc()
+rm(tmp1)
+
+gc()
 #> [1] "obj 0 deleted!"
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  837275 44.8    1654125 88.4         NA  1155037 61.7
-#> Vcells 1464438 11.2    8388608 64.0      16384  2298444 17.6
+#> Ncells  837263 44.8    1653898 88.4         NA  1155422 61.8
+#> Vcells 1464422 11.2    8388608 64.0      16384  2309590 17.7
 ```
 
 Yes.
+
+Then we define the first function to check if the memory of the local
+variable will be freed when the function exits.
+
+``` r
+ftmp <- function(){ tmp <- RClass$new() }
+ftmp()
+
+gc()
+#> [1] "obj 0 deleted!"
+#>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
+#> Ncells  839417 44.9    1653898 88.4         NA  1253622 67.0
+#> Vcells 1470956 11.3    8388608 64.0      16384  2309590 17.7
+```
+
+For sure, it will.
+
+We override the same function to take a variable and print it.
+
+``` r
+ftmp <- function(tmp){ tmp$Set(1) }
+```
 
 Our experiment is designed as follows. If the instance of the `RClass`
 class is passed-by-value into the function `ftmp`, then i) the global
@@ -274,15 +293,18 @@ will see some message saying “obj 1 deleted!”, because the value of
 
 ``` r
 tmp1 = RClass$new()
-ftmp(tmp1); gc()
+ftmp(tmp1)
+
+gc()
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  839410 44.9    1654125 88.4         NA  1247676 66.7
-#> Vcells 1470902 11.3    8388608 64.0      16384  2298444 17.6
+#> Ncells  839463 44.9    1653898 88.4         NA  1253622 67.0
+#> Vcells 1471132 11.3    8388608 64.0      16384  2309590 17.7
 tmp1$Val
 #> [1] 1
 ```
 
-We see that no memory space is freed and the value of the global `tmp1`
+We see that no memory space is freed, which means that inside the
+function, no new variable was created. The value of the global `tmp1`
 has been changed to one successfully.
 
 So our conclusion is that R6 is capable!
