@@ -3,6 +3,11 @@
 R6DS version 1.1.1 (Red DS)
 ===========================
 
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/R6DS)](https://cran.r-project.org/package=R6DS)
+![](http://cranlogs.r-pkg.org/badges/grand-total/R6DS)
+![](http://cranlogs.r-pkg.org/badges/R6DS)
+![](http://cranlogs.r-pkg.org/badges/last-week/R6DS)
+
 R6DS stands for R6 class based Data Structures. The package provides
 reference classes implementing some useful [data
 stuctures](https://en.wikipedia.org/wiki/Data_structure). They are:
