@@ -126,12 +126,14 @@ rlist <- rstack$pop()
 rstring <- rstack$pop()
 ```
 
-The difference between the two assignments are: - `rqueue` shares the
-same memory with the used-to-be-the-last (but not ever since the pop)
-element in `rstack`, and R did not allocate memory space when creating
-`rqueue`. - `rlist`and `rstring` are variables with newly allocated
-memory spaces. As for the list and string elements in `rstack`, they
-have been removed completely.
+The difference between the two assignments are:
+
+-   `rqueue` shares the same memory with the used-to-be-the-last (but
+    not ever since the pop) element in `rstack`, and R did not allocate
+    memory space when creating `rqueue`.
+-   `rlist`and `rstring` are variables with newly allocated memory
+    spaces. As for the list and string elements in `rstack`, they have
+    been removed completely.
 
 So the conclusion is that, whether it is a pass-by-value or by-reference
 depends on the object to be passed, not anything else.
