@@ -3,6 +3,11 @@
 R6DS version 1.1.1 (Red DS)
 ===========================
 
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/R6DS)](https://cran.r-project.org/package=R6DS)
+![](http://cranlogs.r-pkg.org/badges/grand-total/R6DS)
+![](http://cranlogs.r-pkg.org/badges/R6DS)
+![](http://cranlogs.r-pkg.org/badges/last-week/R6DS)
+
 R6DS stands for R6 class based Data Structures. The package provides
 reference classes implementing some useful [data
 stuctures](https://en.wikipedia.org/wiki/Data_structure). They are:
@@ -24,7 +29,13 @@ stuctures](https://en.wikipedia.org/wiki/Data_structure). They are:
 How to install
 --------------
 
-You can install the development version from GitHub
+You can either install the stable version from CRAN
+
+``` r
+install.packages("R6DS")
+```
+
+or install the development version from GitHub
 
 ``` r
 devtools::install_github("yukai-yang/R6DS")
@@ -256,8 +267,8 @@ rm(tmp1)
 gc()
 #> [1] "obj 0 deleted!"
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  837263 44.8    1653898 88.4         NA  1155422 61.8
-#> Vcells 1464422 11.2    8388608 64.0      16384  2309590 17.7
+#> Ncells  837291 44.8    1653991 88.4         NA  1155397 61.8
+#> Vcells 1464573 11.2    8388608 64.0      16384  2281219 17.5
 ```
 
 Yes.
@@ -272,8 +283,8 @@ ftmp()
 gc()
 #> [1] "obj 0 deleted!"
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  839417 44.9    1653898 88.4         NA  1253622 67.0
-#> Vcells 1470956 11.3    8388608 64.0      16384  2309590 17.7
+#> Ncells  839451 44.9    1653991 88.4         NA  1253650 67.0
+#> Vcells 1471117 11.3    8388608 64.0      16384  2281219 17.5
 ```
 
 For sure, it will.
@@ -297,8 +308,8 @@ ftmp(tmp1)
 
 gc()
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  839463 44.9    1653898 88.4         NA  1253622 67.0
-#> Vcells 1471132 11.3    8388608 64.0      16384  2309590 17.7
+#> Ncells  839497 44.9    1653991 88.4         NA  1253650 67.0
+#> Vcells 1471293 11.3    8388608 64.0      16384  2281219 17.5
 tmp1$Val
 #> [1] 1
 ```
