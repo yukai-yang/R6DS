@@ -198,11 +198,11 @@ was implemented and available in the R6 package. I employ the R6 class
 to implement the data structures.
 
 Suppose that you want to design and implement some algorithm. The most
-efficient solution is to use the recursion, in which you pass a variable
-into some function, the function will call itself and pass the same
-variable into it. The corresponding algorithm requires that the variable
-will be changed inside the recursion. See for example, the [traverse
-algorithm in the
+efficient solution is, for example, to use the recursion, in which you
+pass a variable into some function, the function will call itself and
+pass the same variable into it. The corresponding algorithm requires
+that the variable will be changed inside the recursion. See for example,
+the [traverse algorithm in the
 binary-search-tree](https://en.wikipedia.org/wiki/Binary_search_tree),
 in which, if we want to have a copy of these traversed elements, then it
 is desirable to pass-by-reference a container (vector, list, data.frame
@@ -253,8 +253,8 @@ tmp1 = RClass$new()
 rm(tmp1); gc()
 #> [1] "obj 0 deleted!"
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  837264 44.8    1654098 88.4         NA  1155028 61.7
-#> Vcells 1464101 11.2    8388608 64.0      16384  2297823 17.6
+#> Ncells  837273 44.8    1654127 88.4         NA  1155022 61.7
+#> Vcells 1464355 11.2    8388608 64.0      16384  2298809 17.6
 ```
 
 Yes.
@@ -270,8 +270,8 @@ will see some message saying “obj 1 deleted!”, because the value of
 tmp1 = RClass$new()
 ftmp(tmp1); gc()
 #>           used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-#> Ncells  839399 44.9    1654098 88.4         NA  1247665 66.7
-#> Vcells 1470565 11.3    8388608 64.0      16384  2297823 17.6
+#> Ncells  839408 44.9    1654127 88.4         NA  1247674 66.7
+#> Vcells 1470819 11.3    8388608 64.0      16384  2298809 17.6
 tmp1$Val
 #> [1] 1
 ```
@@ -314,7 +314,14 @@ nodes <- c(8, 3, 10, 1, 6, 14, 4, 7, 13)
 bst$insert(collapse = as.list(nodes))
 ```
 
-The tree is built, then we test the traversing:
+OK, the tree is now built. When you read the manual of the `RBST` class,
+you will see that we can do traversal by calling the `traverse` function
+of the class. Each node or element can be manipulated by using the
+function `callback` that is input into `traverse`. But it is a really
+good dream that we can pass something by reference into the recursive
+`traverse` and do something inside the recursion.
+
+Now the dream comes true. We do:
 
 ``` r
 # create an empty container to hold the elements
@@ -365,3 +372,7 @@ unlist(container$toList)
 You can pass any instance of some reference class into the function to
 make the manipulation of the data much more flexible. And you should see
 how important the package can be…
+
+But of course, the example is somewhat “stupid” as you can solve the
+same problem by using some global variable. However, in many other
+cases, to global variables make the program … eh… you know the feeling…
