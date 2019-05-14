@@ -3,11 +3,6 @@
 R6DS version 1.1.1 (Red DS)
 ===========================
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/R6DS)](https://cran.r-project.org/package=R6DS)
-![](http://cranlogs.r-pkg.org/badges/grand-total/R6DS)
-![](http://cranlogs.r-pkg.org/badges/R6DS)
-![](http://cranlogs.r-pkg.org/badges/last-week/R6DS)
-
 R6DS stands for R6 class based Data Structures. The package provides
 reference classes implementing some useful [data
 stuctures](https://en.wikipedia.org/wiki/Data_structure). They are:
@@ -25,6 +20,11 @@ stuctures](https://en.wikipedia.org/wiki/Data_structure). They are:
     ([dictionary](https://en.wikipedia.org/wiki/Associative_array))
 -   RBST ([binary search
     tree](https://en.wikipedia.org/wiki/Binary_search_tree))
+
+For an introduction of the package, please read the online vignette
+
+[Introduction to the R6DS
+Package](https://github.com/yukai-yang/R6DS/blob/master/R6DS-vignette.md)
 
 How to install
 --------------
@@ -75,10 +75,5 @@ Now you can dive deeply into the package by reading the manual
 ``` r
 ?R6DS
 ```
-
-For an introduction of the package, please read the online vignette
-
-[Introduction to the R6DS
-Package](https://github.com/yukai-yang/R6DS/blob/master/R6DS-vignette.md)
 
 Enjoy!
