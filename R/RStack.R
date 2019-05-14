@@ -20,6 +20,19 @@
 #'
 #' @seealso \link{R6DS} for the introduction of the reference class and some common methods
 #'
+#' @section Immutable Methods:
+#'
+#' The immutable methods do not change the nodes of the instance.
+#'
+#' \describe{
+#'
+#' \item{\code{peek}}{
+#' This function is an active method which returns the last pushed element in the stack.
+#' It returns \code{NULL} if the stack is empty.
+#' }
+#'
+#' }
+#'
 #' @section Mutable Methods:
 #'
 #' The mutable methods changes the nodes of the instance.
@@ -105,6 +118,15 @@ RStack$set("active", "toList", function(){
     iter <- iter-1
   }
   return(ret)
+})
+
+RStack$set("active", "is_empty", function(){
+  return(.len == 0)
+})
+
+RStack$set("active", "peek", function(){
+  if(.len == 0) return(NULL)
+  return(.tail$Val)
 })
 
 RStack$set("public", "push", function(..., collapse=NULL){

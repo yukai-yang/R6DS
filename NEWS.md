@@ -3,9 +3,12 @@
 New Features in R6DS 1.1.1
 ==========================
 
+-   Bugs fixed.
 -   A new vignette was added into the package.
--   Now every classes in R6DS has the common method `toList`.
+-   Every class has the new common method `toList`.
+-   Every class has the new common method `is_empty`.
 -   The `insert` function of the `RBST` class can take more arguments.
+-   RStack has `peek` and RQueue has `peekleft`.
 
 New Features in R6DS 1.1.0
 ==========================

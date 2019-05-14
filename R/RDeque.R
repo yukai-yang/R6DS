@@ -14,10 +14,6 @@
 #' See \code{\link{RStack}} and \code{\link{RQueue}} for the introductions of the two classes.
 #' It has a generalized version: the doubly linked list (DLL), see \code{\link{RDLL}}.
 #'
-#' Different from the \link{RStack} and \link{RQueue} classes, you can check the leftmost and rightmost elements
-#' by using \code{peekleft} and \code{peek} methods.
-#' Note that they are both active methods and do not change the deque but just return the elements.
-#'
 #' The elements in the deque are not necessarily to be of the same type,
 #' and they can even be of function type.
 #'
@@ -33,6 +29,7 @@
 #' The immutable methods do not change the nodes of the instance.
 #'
 #' \describe{
+#'
 #' \item{\code{peekleft}}{
 #' This function is an active method which returns the value of the leftmost node of the deque.
 #' It returns \code{NULL} if the deque is empty.
@@ -177,6 +174,20 @@ RDeque$set("active", "toList", function(){
   return(ret)
 })
 
+RDeque$set("active", "is_empty", function(){
+  return(.len == 0)
+})
+
+RDeque$set("active", "peek", function(){
+  if(.len == 0) return(NULL)
+  return(.tail$Val)
+})
+
+RDeque$set("active", "peekleft", function(){
+  if(.len == 0) return(NULL)
+  return(.head$Val)
+})
+
 RDeque$set("public", "append", function(..., collapse=NULL){
   items <- c(list(...), as.list(collapse))
   if(.len > 0){
@@ -269,14 +280,4 @@ RDeque$set("public", "popleft", function(){
     .len <<- .len-1
     return(current$Val)
   }
-})
-
-RDeque$set("active", "peek", function(){
-  if(.len == 0) return(NULL)
-  return(.tail$Val)
-})
-
-RDeque$set("active", "peekleft", function(){
-  if(.len == 0) return(NULL)
-  return(.head$Val)
 })

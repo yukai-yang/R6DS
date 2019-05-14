@@ -78,11 +78,6 @@
 #' a \code{NULL} will be returned.
 #' }
 #'
-#' \item{\code{is_empty}}{
-#' This is an active method which returns a boolean showing if the DLL is empty.
-#' Note that you do not need to write the parenthesis.
-#' }
-#'
 #' \item{\code{peekleft}}{
 #' See \code{\link{RDeque}}.
 #' }
@@ -168,9 +163,6 @@
 #' # where the numbers 0, 1, 2, 3, 4 are appended into the DLL
 #'
 #' ### immutable methods
-#'
-#' # is_empty
-#' dll$is_empty
 #'
 #' # show
 #' dll$show()

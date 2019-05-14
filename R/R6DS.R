@@ -113,6 +113,10 @@
 #' Note that \code{\link{RBST}} has multiple versions of the \code{toList} methods.
 #' }
 #'
+#' \item{\code{is_empty}}{
+#' an active method which returns a boolean showing if the instance is empty.
+#' }
+#'
 #' \item{\code{clone(deep=FALSE)}}{
 #' an immutable method of an instance which returns of copy of the instance.
 #' The \code{deep=TRUE} argument indicates that \code{clone} also gives a copy of its members.

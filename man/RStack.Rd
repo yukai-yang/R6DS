@@ -24,6 +24,21 @@ and they can even be of function type.
 For the details about the stack data structure, see \href{https://en.wikipedia.org/wiki/Stack_(abstract_data_type)}{Stack at Wikipedia}.
 }
 
+\section{Immutable Methods}{
+
+
+The immutable methods do not change the nodes of the instance.
+
+\describe{
+
+\item{\code{peek}}{
+This function is an active method which returns the last pushed element in the stack.
+It returns \code{NULL} if the stack is empty.
+}
+
+}
+}
+
 \section{Mutable Methods}{
 
 

@@ -20,10 +20,6 @@ The deque is slightly more powerful than stack and queue, as it can append eleme
 See \code{\link{RStack}} and \code{\link{RQueue}} for the introductions of the two classes.
 It has a generalized version: the doubly linked list (DLL), see \code{\link{RDLL}}.
 
-Different from the \link{RStack} and \link{RQueue} classes, you can check the leftmost and rightmost elements
-by using \code{peekleft} and \code{peek} methods.
-Note that they are both active methods and do not change the deque but just return the elements.
-
 The elements in the deque are not necessarily to be of the same type,
 and they can even be of function type.
 }
@@ -38,6 +34,7 @@ For the details about the deque data structure, see \href{https://en.wikipedia.o
 The immutable methods do not change the nodes of the instance.
 
 \describe{
+
 \item{\code{peekleft}}{
 This function is an active method which returns the value of the leftmost node of the deque.
 It returns \code{NULL} if the deque is empty.

@@ -268,6 +268,10 @@ RBST$set("public", "initialize", function(lessthan, equal, ..., collapse=NULL){
   for(item in items) insert(item)
 })
 
+RBST$set("active", "is_empty", function(){
+  return(is.null(.root))
+})
+
 RBST$set("active", "toList", function(){
   ret <- RQueue$new()
   callback <- function(item)ret$enqueue(item)

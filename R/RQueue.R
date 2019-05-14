@@ -20,6 +20,19 @@
 #'
 #' @seealso \link{R6DS} for the introduction of the reference class and some common methods
 #'
+#' @section Immutable Methods:
+#'
+#' The immutable methods do not change the nodes of the instance.
+#'
+#' \describe{
+#'
+#' \item{\code{peekleft}}{
+#' This function is an active method which returns the leftmost element in the queue.
+#' It returns \code{NULL} if the queue is empty.
+#' }
+#'
+#' }
+#'
 #' @section Mutable Methods:
 #'
 #' The mutable methods changes the nodes of the instance.
@@ -33,7 +46,7 @@
 #' }
 #'
 #' \item{\code{dequeue()}}{
-#' The \code{dequeue} method returns and removes the leftmost element in the deque.
+#' The \code{dequeue} method returns and removes the leftmost element in the queue.
 #' It returns \code{NULL} if the queue is empty.
 #' }
 #'
@@ -114,6 +127,15 @@ RQueue$set("active", "toList", function(){
     iter <- iter+1
   }
   return(ret)
+})
+
+RQueue$set("active", "is_empty", function(){
+  return(.len == 0)
+})
+
+RQueue$set("active", "peekleft", function(){
+  if(.len == 0) return(NULL)
+  return(.head$Val)
 })
 
 RQueue$set("public", "enqueue", function(..., collapse=NULL){

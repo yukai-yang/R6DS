@@ -24,6 +24,21 @@ and they can even be of function type.
 For the details about the queue data structure, see \href{https://en.wikipedia.org/wiki/Queue_(abstract_data_type)}{Queue at Wikipedia}.
 }
 
+\section{Immutable Methods}{
+
+
+The immutable methods do not change the nodes of the instance.
+
+\describe{
+
+\item{\code{peekleft}}{
+This function is an active method which returns the leftmost element in the queue.
+It returns \code{NULL} if the queue is empty.
+}
+
+}
+}
+
 \section{Mutable Methods}{
 
 
@@ -38,7 +53,7 @@ which is equivalent to the \code{push} in \code{\link{RStack}}.
 }
 
 \item{\code{dequeue()}}{
-The \code{dequeue} method returns and removes the leftmost element in the deque.
+The \code{dequeue} method returns and removes the leftmost element in the queue.
 It returns \code{NULL} if the queue is empty.
 }
 
