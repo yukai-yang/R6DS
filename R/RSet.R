@@ -11,6 +11,12 @@
 #' such that any two elements in the set cannot be equal.
 #' The set data structure does not care the order of the elements.
 #'
+#' It should be noticed that, in your design, if any two elements in the set can be easily compared,
+#' by simply, for example, keys, numbers, and etc.,
+#' the RSet should not be recommended due to efficiency reason.
+#' The RSet is suitable for the cases when you have a relatively complex "=" operation
+#' between two elements in the set.
+#'
 #' The class \code{RSet} inherits the \code{\link{RDLL}} class,
 #' and therefor it has all the methods that \code{\link{RDLL}} has.
 #'
@@ -23,7 +29,7 @@
 #' to add a new element when using the \code{RSet} class.
 #'
 #' The elements in the set are not necessarily to be of the same type,
-#' and they can even be of function type.
+#' and they can be any R objects.
 #'
 #' @author Yukai Yang, \email{yukai.yang@@statistik.uu.se}
 #'
@@ -67,50 +73,53 @@
 #' }
 #'
 #' \item{\code{union(rset)}}{
-#' The method \code{union} takes another instance \code{rset} of the \code{RSet} or \code{RDLL} class
-#' and returns the union of the two sets.
+#' The method \code{union} merges the elements in \code{rset}, an instance of some class in the package,
+#' with its elements, and returns a new union set of the two.
 #' }
 #'
 #' \item{\code{intersection(rset)}}{
-#' The method \code{intersection} takes another instance \code{rset} of the \code{RSet} class
-#' and returns the intersection of the two sets.
+#' The method \code{intersection} returns a new intersection set (RSet) of
+#' the current set and \code{rset}, an instance of some class in the package.
 #' }
 #'
 #' \item{\code{difference(rset)}}{
-#' The method \code{difference} takes another instance \code{rset} of the \code{RSet} class
-#' and returns the difference (current instance minus \code{rset}) of the two sets.
+#' The method \code{difference} returns a new difference set (RSet) of
+#' the current set and \code{rset}, an instance of some class in the package
+#' (current instance minus \code{rset}).
 #' }
 #'
 #' \item{\code{subset(rset)}}{
-#' The method \code{subset} takes another instance \code{rset} of the \code{RSet} class.
-#' It returns \code{TRUE} if the current instance is a subset of \code{rset}.
+#' The method \code{subset} returns a boolean indicating
+#' if the current set is a subset of \code{rset},
+#' an instance of some class in the package.
 #' }
 #'
 #' \item{\code{contains(rset)}}{
-#' The method \code{contains} takes another instance \code{rset} of the \code{RSet} or \code{RDLL} class.
-#' It returns \code{TRUE} if the current instance contains \code{rset}.
+#' The method \code{contains} returns a boolean indicating
+#' if the current set contains \code{rset},
+#' an instance of some class in the package.
 #' }
 #'
 #' }
 #'
 #' @section Mutable Methods:
 #'
-#' The mutable methods changes the elements of the instance.
+#' The mutable methods change the instance.
 #'
 #' \describe{
 #'
 #' \item{\code{add(val)}}{
-#' The method \code{add} adds a new element and returns \code{TRUE}
-#' showing that the inserting is successful,
-#' but if there is one element in current set that is \code{equal} to the element,
-#' the method will do nothing and return a \code{FALSE}
-#' showing that the adding fails.
+#' The method \code{add} adds a new element into the set and returns a booleank
+#' showing if the insertion is successful.
+#' }
+#'
+#' \item{\code{add_multiple(..., collapse=NULL)}}{
+#' The method \code{add_multiple} adds new elements in \code{...} and \code{collapse} into the set.
 #' }
 #'
 #' \item{\code{delete(val)}}{
-#' The method \code{delete} removes the element which is \code{equal} to \code{val}.
-#' If the element is found, then it will be removed and the function returns a \code{TRUE},
-#' and if the element is not found, then it will do nothing and returns a \code{FALSE},
+#' The method \code{delete} removes the element which is \code{equal} to \code{val} in the set.
+#' It returns a boolean showing if the deletion is successful (if the element is not found in the set).
 #' }
 #'
 #' }
@@ -129,9 +138,6 @@
 #' set <- RSet$new(equal=equal)
 #'
 #' # of course you can start to add elements when creating the instance
-#' # the previous RSet instance will be removed by doing so
-#' # and the memory allocated for that one will be cleared,
-#' # as now set has been pointed to another instance of the class.
 #' set <- RSet$new(equal=equal,
 #'     list(key=5, val="5"), collapse=list(list(key=3,val="3"), list(key=9,val="9")))
 #' # the following sentence is equivalent to the above
@@ -185,66 +191,59 @@ RSet$set("public", "initialize", function(equal, ..., collapse=NULL){
 })
 
 RSet$set("public", "has", function(val){
-  current <- .head
-  while(!is.null(current)){
-    if(equal(current$Val, val)) return(TRUE)
-    current <- current$Next
-  }
+  if(.len == 0) return(FALSE)
+
+  for(iter in (.front+1):(.front+.len))
+    if(equal(.elem[[iter]], val)) return(TRUE)
   return(FALSE)
+})
+
+RSet$set("public", "add_multiple", function(..., collapse=NULL){
+  items = c(list(...), as.list(collapse))
+  for(item in items) add(item)
 })
 
 RSet$set("public", "add", function(val){
-  if(!has(val)){ super$append(val); return(TRUE)}
-  return(FALSE)
+  if(has(val)){ return(FALSE)
+  }else{ append(val); return(TRUE) }
 })
 
 RSet$set("public", "delete", function(val){
-  current <- .head
-  while(!is.null(current)){
-    if(equal(current$Val, val)){
+  if(.len == 0) return(FALSE)
 
-      if(is.null(current$Prev)){
-        .head <<- current$Next
-      }else{
-        current$Prev$setNext(current$Next)
-      }
-      if(is.null(current$Next)){
-        .tail <<- current$Prev
-      }else{
-        current$Next$setPrev(current$Prev)
-      }
-
-      .len <<- .len-1; return(TRUE)
+  for(iter in 1:.len)
+    if(equal(.elem[[.front+iter]], val)){
+      .elem[[.front+iter]] <<- NULL
+      .len <<- .len-1
+      return(TRUE)
     }
-    current <- current$Next
-  }
   return(FALSE)
 })
 
 RSet$set("public", "union", function(rset){
-  ret <- RSet$new(equal=equal,collapse=self$toList)
-  items <- rset$toList
-  for(item in items) ret$add(item)
+  ret <- RSet$new(equal=equal,collapse=c(self$toList,rset$toList))
   return(ret)
 })
 
 RSet$set("public", "intersection", function(rset){
   ret <- RSet$new(equal=equal)
   items <- rset$toList
-  for(item in items) if(has(item)) ret$append(item)
+  for(item in items) if(has(item)) ret$add(item)
   return(ret)
 })
 
 RSet$set("public", "difference", function(rset){
+  tmp <- RSet$new(equal=equal,collapse=rset$toList)
   ret <- RSet$new(equal=equal)
   items <- self$toList
-  for(item in items) if(!rset$has(item)) ret$append(item)
+  for(item in items) if(!tmp$has(item)) ret$append(item)
   return(ret)
 })
 
 # rset must be a set
 RSet$set("public", "subset", function(rset){
-  return(rset$contains(self))
+  tmp <- RSet$new(equal=equal,collapse=rset$toList)
+  return(tmp$contains(self))
 })
 
 RSet$set("public", "contains", function(rset){

@@ -120,17 +120,18 @@ an active immutable method of an instance which returns a list containing its el
 Note that \code{\link{RBST}} has multiple versions of the \code{toList} methods.
 }
 
-\item{\code{is_empty}}{
-an active method which returns a boolean showing if the instance is empty.
-}
-
-\item{\code{clone(deep=FALSE)}}{
-an immutable method of an instance which returns of copy of the instance.
-The \code{deep=TRUE} argument indicates that \code{clone} also gives a copy of its members.
+\item{\code{is_empty()}}{
+a method which returns a boolean showing if the instance is empty.
 }
 
 \item{\code{size}}{
 an active immutable method of an instance to return its size (like the \code{length} of an R vector).
+}
+
+\item{\code{release()}}{
+a method of an instance which does the garbage collection and releases the redundant memory occupation.
+
+Note that \code{\link{RDict}} \code{\link{RBST}} do not have this methhod.
 }
 
 }

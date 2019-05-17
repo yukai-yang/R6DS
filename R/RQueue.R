@@ -6,12 +6,12 @@
 #'
 #' The RQueue reference class implements the data structure queue.
 #'
-#' A queue is an ordered list of items following the First-In-First-Out (FIFO) principle.
-#' The \code{enqueue} method takes elements and enqueue them into the queue,
-#' while the \code{dequeue} method returns and removes the earliest enqueued element in the queue.
+#' A queue is an ordered list of elements following the First-In-First-Out (FIFO) principle.
+#' The \code{enqueue} method takes elements and add them to the rear terminal position (right) of the queue,
+#' while the \code{dequeue} method returns and removes the element in the queue from the front terminal position (left).
 #'
 #' The elements in the queue are not necessarily to be of the same type,
-#' and they can even be of function type.
+#' and they can be any R objects.
 #'
 #' @author Yukai Yang, \email{yukai.yang@@statistik.uu.se}
 #'
@@ -22,12 +22,12 @@
 #'
 #' @section Immutable Methods:
 #'
-#' The immutable methods do not change the nodes of the instance.
+#' The immutable method does not change the instance.
 #'
 #' \describe{
 #'
-#' \item{\code{peekleft}}{
-#' This function is an active method which returns the leftmost element in the queue.
+#' \item{\code{peekleft()}}{
+#' This method returns the leftmost (front) element in the queue.
 #' It returns \code{NULL} if the queue is empty.
 #' }
 #'
@@ -35,18 +35,19 @@
 #'
 #' @section Mutable Methods:
 #'
-#' The mutable methods changes the nodes of the instance.
+#' The mutable methods change the instance.
 #'
 #' \describe{
 #'
 #' \item{\code{enqueue(..., collapse=NULL)}}{
-#' The \code{enqueue} method creates nodes containing the values in \code{...} and \code{collapse},
-#' and push them into the deque from the right,
-#' which is equivalent to the \code{push} in \code{\link{RStack}}.
+#' The \code{enqueue} method enqueues the elements in \code{...} and \code{collapse} into the queue
+#' (to the right or rear).
+#'
+#' Note that you can input multiple elements.
 #' }
 #'
 #' \item{\code{dequeue()}}{
-#' The \code{dequeue} method returns and removes the leftmost element in the queue.
+#' The \code{dequeue} method dequeues (returns and removes) one element (the leftmost or front) fron the queue.
 #' It returns \code{NULL} if the queue is empty.
 #' }
 #'
@@ -61,9 +62,7 @@
 #' # to create a new instance of the class
 #' queue <- RQueue$new()
 #'
-#' # the previous RQueue instance will be removed by running the following
-#' # and the memory allocated for that one will be cleared,
-#' # as now, the variable queue points to another instance of the class.
+#' # the previous RQueue instance will be removed if you run
 #' queue <- RQueue$new(0, 1, 2, collapse=list(3, 4))
 #' # the following sentence is equivalent to the above
 #' queue <- RQueue$new(0, 1, 2, 3, 4)
@@ -93,9 +92,10 @@
 #' @export
 RQueue <- R6Class("RQueue", portable = FALSE, class = FALSE)
 
-RQueue$set("private", ".head", NULL)
+RQueue$set("private", ".elem", list())
 
-RQueue$set("private", ".tail", NULL)
+# the position before the first node
+RQueue$set("private", ".front", 0)
 
 RQueue$set("private", ".len", 0)
 
@@ -104,70 +104,51 @@ RQueue$set("active", "size", function(){ return(.len) })
 RQueue$set("public", "initialize", function(..., collapse=NULL){
   items <- c(list(...), as.list(collapse))
   .len <<- length(items)
-  if(.len == 1){
-    .head <<- RNode$new(items[[1]])
-    .tail <<- .head
+
+  iter <- 1
+  for(item in items){
+    .elem[[iter]] <<- item
+    iter <- iter+1
   }
-  else if(.len > 1){
-    .head <<- RNode$new(items[[1]])
-    .tail <<- .head
-    for(iter in 2:.len){
-      .tail$setNext(RNode$new(items[[iter]]))
-      .tail <<- .tail$Next
-    }
-  }else{}
 })
 
 RQueue$set("active", "toList", function(){
-  ret = list(); length(ret) = .len
-  current <- .head; iter = 1
-  while(!is.null(current)){
-    ret[[iter]] <- current$Val
-    current <- current$Next
-    iter <- iter+1
-  }
-  return(ret)
+  if(.len == 0) return(list())
+  return(.elem[(.front+1):(.front+.len)])
 })
 
-RQueue$set("active", "is_empty", function(){
+RQueue$set("public", "is_empty", function(){
   return(.len == 0)
 })
 
-RQueue$set("active", "peekleft", function(){
+RQueue$set("public", "peekleft", function(){
   if(.len == 0) return(NULL)
-  return(.head$Val)
+  return(.elem[[.front+1]])
 })
 
 RQueue$set("public", "enqueue", function(..., collapse=NULL){
   items <- c(list(...), as.list(collapse))
-  if(.len > 0){
-    .len <<- .len+length(items)
-    for(item in items){
-      .tail$setNext(RNode$new(item))
-      .tail <<- .tail$Next
-    }
-  }else{
-    .len <<- length(items)
-    if(.len == 1){
-      .head <<- RNode$new(items[[1]])
-      .tail <<- .head
-    }
-    else if(.len > 1){
-      .head <<- RNode$new(items[[1]])
-      .tail <<- .head
-      for(iter in 2:.len){
-        .tail$setNext(RNode$new(items[[iter]]))
-        .tail <<- .tail$Next
-      }
-    }else{}
+
+  iter <- .front+.len+1
+  for(item in items){
+    .elem[[iter]] <<- item
+    iter <- iter+1
   }
+  .len <<- .len+length(items)
+
+  return(invisible(NULL))
 })
 
 RQueue$set("public", "dequeue", function(){
   if(.len == 0) return(NULL)
-  current <- .head
-  .head <<- .head$Next
+  .front <<- .front+1
   .len <<- .len-1
-  if(.len == 0) .tail <<- NULL
-  return(current$Val)
+  return(.elem[[.front]])
+})
+
+RQueue$set("public", "release", function(){
+  if(.len > 0){ .elem <<- .elem[(.front+1):(.front+.len)]
+  }else .elem <<- list()
+  .front <<- 0
+  return(invisible(NULL))
 })

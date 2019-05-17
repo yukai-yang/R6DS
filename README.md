@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-R6DS version 1.1.1 (Red DS)
+R6DS version 1.2.0 (Red DS)
 ===========================
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/R6DS)](https://cran.r-project.org/package=R6DS)
@@ -63,7 +63,7 @@ running
 
 ``` r
 version()
-#> R6DS version 1.1.1 (Red DS)
+#> R6DS version 1.2.0 (Red DS)
 ```
 
 Then you can take a look at all the available functions and data in the

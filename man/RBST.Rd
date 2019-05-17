@@ -12,18 +12,21 @@ RBST
 The RBST reference class implements the data structure binary search tree (BST).
 }
 \details{
-A BST is a particular type of container storing items or elements (nodes) by following a binary tree structure.
+A BST is a particular type of container storing elements in nodes by following a binary tree structure.
+So the element is the value of the corresponding node in the tree.
+
 The BST has one root on top, which is the first node of the tree,
 and each node in the BST has at most two sub-nodes (left sub-node and right sub-node) which can be the roots of their sub-trees.
 
-The BST should be equipped with the "<" and "=" operators such that any two nodes in the tree can be compared.
-And therefore, the ">" is defined.
-The BST structure follows strictly the rules that, for a certain node in the tree,
-any nodes in its left sub-tree must be strictly smaller than it,
-any nodes in its right sub-tree must be strictly larger than it,
-and any two nodes in the tree must not be equal.
+The BST should be equipped with the "<" and "=" operations such that any two nodes in the tree can be compared.
+Note that, by the definitions of the "<" and "=" operations, the operation ">" is also defined.
 
-Therefore, the BST is a special set or dictionary equipped with "<", ">" operators.
+The BST structure follows strictly the rules that, for a certain node in the tree,
+any nodes in its left sub-tree must be strictly smaller ("<") than it,
+any nodes in its right sub-tree must be strictly larger (">") than it,
+and any two nodes in the tree must not be equal (no "=").
+
+Therefore, the BST is a special set or dictionary equipped with "<", ">" operations.
 
 When you create a new RBST instance, you have to input two functions which defines
 the bodies of the two private methods \code{lessthan} and \code{equal}.
@@ -183,9 +186,6 @@ equal <- function(x, y) return(x$key == y$key)
 bst <- RBST$new(lessthan=lessthan, equal=equal)
 
 # of course you can start to push elements when creating the instance
-# the previous BST instance will be removed by doing so
-# and the memory allocated for that one will be cleared,
-# as now bst has been pointed to another instance of the class.
 bst <- RBST$new(lessthan=lessthan, equal=equal,
     list(key=5, val="5"), collapse=list(list(key=3,val="3"), list(key=9,val="9")))
 # the following sentence is equivalent to the above

@@ -1,7 +1,7 @@
 Package: R6DS
 Type: Package
 Title: R6 Reference Class Based Data Structures
-Version: 1.1.1
+Version: 1.2.0
 Authors@R: person(given="Yukai",family="Yang",email="yukai.yang@statistik.uu.se",role=c("aut", "cre"),comment=c(ORCID="0000-0002-2623-8549"))
 Description: Provides reference classes implementing some useful data structures.
     The package implements these data structures by using the reference class R6.

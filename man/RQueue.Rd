@@ -12,12 +12,12 @@ RQueue
 The RQueue reference class implements the data structure queue.
 }
 \details{
-A queue is an ordered list of items following the First-In-First-Out (FIFO) principle.
-The \code{enqueue} method takes elements and enqueue them into the queue,
-while the \code{dequeue} method returns and removes the earliest enqueued element in the queue.
+A queue is an ordered list of elements following the First-In-First-Out (FIFO) principle.
+The \code{enqueue} method takes elements and add them to the rear terminal position (right) of the queue,
+while the \code{dequeue} method returns and removes the element in the queue from the front terminal position (left).
 
 The elements in the queue are not necessarily to be of the same type,
-and they can even be of function type.
+and they can be any R objects.
 }
 \section{References}{
 
@@ -27,12 +27,12 @@ For the details about the queue data structure, see \href{https://en.wikipedia.o
 \section{Immutable Methods}{
 
 
-The immutable methods do not change the nodes of the instance.
+The immutable method does not change the instance.
 
 \describe{
 
-\item{\code{peekleft}}{
-This function is an active method which returns the leftmost element in the queue.
+\item{\code{peekleft()}}{
+This method returns the leftmost (front) element in the queue.
 It returns \code{NULL} if the queue is empty.
 }
 
@@ -42,18 +42,19 @@ It returns \code{NULL} if the queue is empty.
 \section{Mutable Methods}{
 
 
-The mutable methods changes the nodes of the instance.
+The mutable methods change the instance.
 
 \describe{
 
 \item{\code{enqueue(..., collapse=NULL)}}{
-The \code{enqueue} method creates nodes containing the values in \code{...} and \code{collapse},
-and push them into the deque from the right,
-which is equivalent to the \code{push} in \code{\link{RStack}}.
+The \code{enqueue} method enqueues the elements in \code{...} and \code{collapse} into the queue
+(to the right or rear).
+
+Note that you can input multiple elements.
 }
 
 \item{\code{dequeue()}}{
-The \code{dequeue} method returns and removes the leftmost element in the queue.
+The \code{dequeue} method dequeues (returns and removes) one element (the leftmost or front) fron the queue.
 It returns \code{NULL} if the queue is empty.
 }
 
@@ -67,9 +68,7 @@ It returns \code{NULL} if the queue is empty.
 # to create a new instance of the class
 queue <- RQueue$new()
 
-# the previous RQueue instance will be removed by running the following
-# and the memory allocated for that one will be cleared,
-# as now, the variable queue points to another instance of the class.
+# the previous RQueue instance will be removed if you run
 queue <- RQueue$new(0, 1, 2, collapse=list(3, 4))
 # the following sentence is equivalent to the above
 queue <- RQueue$new(0, 1, 2, 3, 4)

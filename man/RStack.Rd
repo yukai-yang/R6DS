@@ -12,12 +12,12 @@ RStack
 The RStack reference class implements the data structure stack.
 }
 \details{
-A stack is an ordered list of items following the Last-In-First-Out (LIFO) principle.
-The \code{push} method takes elements and push them into the stack,
-while the \code{pop} method returns and removes the last "pushed" element in the stack.
+A stack is an ordered list of elements following the Last-In-First-Out (LIFO) principle.
+The \code{push} method takes elements and add them to the top position (right) of the stack,
+while the \code{pop} method returns and removes the last "pushed" (top or rightmost) element in the stack.
 
 The elements in the stack are not necessarily to be of the same type,
-and they can even be of function type.
+and they can be any R objects.
 }
 \section{References}{
 
@@ -27,12 +27,12 @@ For the details about the stack data structure, see \href{https://en.wikipedia.o
 \section{Immutable Methods}{
 
 
-The immutable methods do not change the nodes of the instance.
+The immutable method does not change the instance.
 
 \describe{
 
-\item{\code{peek}}{
-This function is an active method which returns the last pushed element in the stack.
+\item{\code{peek()}}{
+This method returns the last pushed (top or rightmost) element in the stack.
 It returns \code{NULL} if the stack is empty.
 }
 
@@ -42,18 +42,19 @@ It returns \code{NULL} if the stack is empty.
 \section{Mutable Methods}{
 
 
-The mutable methods changes the nodes of the instance.
+The mutable methods change the instance.
 
 \describe{
 
 \item{\code{push(..., collapse=NULL)}}{
-The \code{push} method creates nodes containing the values in \code{...} and \code{collapse},
-and push them into the stach on the tail,
-which is equivalent to the \code{enqueue} in \code{\link{RQueue}}.
+The \code{push} method pushes the elements in \code{...} and \code{collapse} into the stack
+(to the top or right).
+
+Note that you can input multiple elements.
 }
 
 \item{\code{pop()}}{
-The \code{pop} method returns and removes the last pushed element in the stack.
+The \code{pop} method pops (returns and removes) the last pushed (rightmost) element in the stack.
 It returns \code{NULL} if the stack is empty.
 }
 
@@ -67,9 +68,7 @@ It returns \code{NULL} if the stack is empty.
 # to create a new instance of the class
 stack <- RStack$new()
 
-# the previous RStack instance will be removed by running the following
-# and the memory allocated for that one will be cleared,
-# as now stack has been pointed to another instance of the class.
+# the previous RStack instance will be removed if you run
 stack <- RStack$new(0, 1, 2, collapse=list(3, 4))
 # the following sentence is equivalent to the above
 stack <- RStack$new(0, 1, 2, 3, 4)

@@ -16,6 +16,12 @@ A set is a collection of items or elements equipped with the "=" operators
 such that any two elements in the set cannot be equal.
 The set data structure does not care the order of the elements.
 
+It should be noticed that, in your design, if any two elements in the set can be easily compared,
+by simply, for example, keys, numbers, and etc.,
+the RSet should not be recommended due to efficiency reason.
+The RSet is suitable for the cases when you have a relatively complex "=" operation
+between two elements in the set.
+
 The class \code{RSet} inherits the \code{\link{RDLL}} class,
 and therefor it has all the methods that \code{\link{RDLL}} has.
 
@@ -28,7 +34,7 @@ It is strongly recommended that the user should use the \code{add} method
 to add a new element when using the \code{RSet} class.
 
 The elements in the set are not necessarily to be of the same type,
-and they can even be of function type.
+and they can be any R objects.
 }
 \section{References}{
 
@@ -73,28 +79,31 @@ if the set contains \code{val}.
 }
 
 \item{\code{union(rset)}}{
-The method \code{union} takes another instance \code{rset} of the \code{RSet} or \code{RDLL} class
-and returns the union of the two sets.
+The method \code{union} merges the elements in \code{rset}, an instance of some class in the package,
+with its elements, and returns a new union set of the two.
 }
 
 \item{\code{intersection(rset)}}{
-The method \code{intersection} takes another instance \code{rset} of the \code{RSet} class
-and returns the intersection of the two sets.
+The method \code{intersection} returns a new intersection set (RSet) of
+the current set and \code{rset}, an instance of some class in the package.
 }
 
 \item{\code{difference(rset)}}{
-The method \code{difference} takes another instance \code{rset} of the \code{RSet} class
-and returns the difference (current instance minus \code{rset}) of the two sets.
+The method \code{difference} returns a new difference set (RSet) of
+the current set and \code{rset}, an instance of some class in the package
+(current instance minus \code{rset}).
 }
 
 \item{\code{subset(rset)}}{
-The method \code{subset} takes another instance \code{rset} of the \code{RSet} class.
-It returns \code{TRUE} if the current instance is a subset of \code{rset}.
+The method \code{subset} returns a boolean indicating
+if the current set is a subset of \code{rset},
+an instance of some class in the package.
 }
 
 \item{\code{contains(rset)}}{
-The method \code{contains} takes another instance \code{rset} of the \code{RSet} or \code{RDLL} class.
-It returns \code{TRUE} if the current instance contains \code{rset}.
+The method \code{contains} returns a boolean indicating
+if the current set contains \code{rset},
+an instance of some class in the package.
 }
 
 }
@@ -103,22 +112,22 @@ It returns \code{TRUE} if the current instance contains \code{rset}.
 \section{Mutable Methods}{
 
 
-The mutable methods changes the elements of the instance.
+The mutable methods change the instance.
 
 \describe{
 
 \item{\code{add(val)}}{
-The method \code{add} adds a new element and returns \code{TRUE}
-showing that the inserting is successful,
-but if there is one element in current set that is \code{equal} to the element,
-the method will do nothing and return a \code{FALSE}
-showing that the adding fails.
+The method \code{add} adds a new element into the set and returns a booleank
+showing if the insertion is successful.
+}
+
+\item{\code{add_multiple(..., collapse=NULL)}}{
+The method \code{add_multiple} adds new elements in \code{...} and \code{collapse} into the set.
 }
 
 \item{\code{delete(val)}}{
-The method \code{delete} removes the element which is \code{equal} to \code{val}.
-If the element is found, then it will be removed and the function returns a \code{TRUE},
-and if the element is not found, then it will do nothing and returns a \code{FALSE},
+The method \code{delete} removes the element which is \code{equal} to \code{val} in the set.
+It returns a boolean showing if the deletion is successful (if the element is not found in the set).
 }
 
 }
@@ -136,9 +145,6 @@ equal <- function(x, y) return(x$key == y$key)
 set <- RSet$new(equal=equal)
 
 # of course you can start to add elements when creating the instance
-# the previous RSet instance will be removed by doing so
-# and the memory allocated for that one will be cleared,
-# as now set has been pointed to another instance of the class.
 set <- RSet$new(equal=equal,
     list(key=5, val="5"), collapse=list(list(key=3,val="3"), list(key=9,val="9")))
 # the following sentence is equivalent to the above

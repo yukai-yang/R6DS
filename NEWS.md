@@ -1,5 +1,11 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+New Features in R6DS 1.2.0
+==========================
+
+-   The efficiency of the classes has been improved.
+-   Bugs fixed.
+
 New Features in R6DS 1.1.1
 ==========================
 
