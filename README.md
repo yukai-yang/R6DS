@@ -138,3 +138,19 @@ The difference between the two assignments are:
 
 So the conclusion is that, whether it is a pass-by-value or by-reference
 depends on the object to be passed, not anything else.
+
+
+## Citation
+
+If you use R6DS in your research, please cite the package as follows.
+
+```
+@Manual{R6DS,
+  title  = {R6DS: R6 Reference Class Based Data Structures},
+  author = {Yukai Yang},
+  year   = {2019},
+  note   = {R package version 1.2.0},
+  doi    = {10.32614/CRAN.package.R6DS},
+  url    = {https://CRAN.R-project.org/package=R6DS}
+}
+```
