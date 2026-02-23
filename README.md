@@ -7,6 +7,7 @@ R6DS version 1.2.0 (Red DS)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/R6DS)
 ![](http://cranlogs.r-pkg.org/badges/R6DS)
 ![](http://cranlogs.r-pkg.org/badges/last-week/R6DS)
+[![License: GPL-3](https://img.shields.io/badge/License-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 R6DS stands for R6 class based Data Structures. The package provides
 reference classes implementing some useful [data
