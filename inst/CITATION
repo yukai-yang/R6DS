@@ -1,0 +1,11 @@
+citHeader("To cite the R6DS package, please use:")
+
+bibentry(
+  bibtype = "Manual",
+  title = "R6DS: R6 Reference Class Based Data Structures",
+  author = person("Yukai", "Yang"),
+  year = "2019",
+  note = "R package version 1.2.0",
+  doi = "10.32614/CRAN.package.R6DS",
+  url = "https://CRAN.R-project.org/package=R6DS"
+)
